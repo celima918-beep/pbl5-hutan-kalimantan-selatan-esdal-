@@ -8,21 +8,20 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Panel Informasi Kelompok dan Logo Kampus pada bagian atas Sidebar
-st.sidebar.image(
-    "https://www.unisba.ac.id/wp-content/uploads/2022/09/logo-unisba-300x300.png",
-    width=120
-)
-st.sidebar.markdown("### **UNIVERSITAS ISLAM BANDUNG**")
-st.sidebar.markdown("**Fakultas Ekonomi dan Bisnis**")
-st.sidebar.markdown("Program Studi Ekonomi Pembangunan")
+# Navigasi menu utama berdasarkan rencana induk pilar aplikasi
+st.sidebar.title("Eco-Forest Valuation")
+st.sidebar.write("Aplikasi Pembelajaran Ekonomi Sumber Daya Hutan")
+st.sidebar.write("Referensi Teoretis: Tietenberg & Lewis Chapter 13")
 
+menu = st.sidebar.radio(
+    "Pilih Modul Pembelajaran:",
+    ["Halaman Utama & Teori", "Modul 1: Kalkulator TEV", "Modul 2: Analisis Trade-off", "Modul 3: Kebijakan PES", "Modul 4: Kasus Interaktif"]
+)
+
+# Tampilan Alur Belajar Pengguna pada Sidebar
 st.sidebar.markdown("---")
-st.sidebar.markdown("**ANGGOTA KELOMPOK:**")
-st.sidebar.write("1. Ina Rani Amelia (10090224002)")
-st.sidebar.write("2. Nayla Dwi Safitri (10090224013)")
-st.sidebar.write("3. Celi Maulidi Aprilia (10090224027)")
-st.sidebar.markdown("---")
+st.sidebar.subheader("Rencana Alur Belajar")
+st.sidebar.caption("Fase 1: Teori -> Fase 2: Valuasi -> Fase 3: Simulasi -> Fase 4: Evaluasi")
 
 # Data input berdasarkan berkas DATA PBL5.xlsx dan BPS Kalimantan Selatan
 data_kalsel = {
@@ -36,23 +35,32 @@ data_kalsel = {
     "Nilai Oksigen": 2117993021
 }
 
-# Navigasi menu utama berdasarkan rencana induk pilar aplikasi
-st.sidebar.title("Eco-Forest Valuation")
-st.sidebar.write("Aplikasi Pembelajaran Ekonomi Sumber Daya Hutan")
-st.sidebar.write("Referensi Teoretis: Tietenberg & Lewis Chapter 13")
+# HALAMAN UTAMA & TEORI DASAR
+if menu == "Halaman Utama & Teori":
+    # Bagian Identitas Kampus dan Kelompok di Halaman Depan Utama
+    col_logo, col_judul = st.columns([1, 4])
+    with col_logo:
+        st.image(
+            "https://www.unisba.ac.id/wp-content/uploads/2022/09/logo-unisba-300x300.png",
+            width=140
+        )
+    with col_judul:
+        st.title("UNIVERSITAS ISLAM BANDUNG")
+        st.subheader("Fakultas Ekonomi dan Bisnis | Ekonomi Pembangunan")
+        st.write("Tugas Kelompok: Aplikasi Pembelajaran Ekonomi Sumber Daya Hutan (Kalimantan Selatan)")
 
-menu = st.sidebar.radio(
-    "Pilih Modul Pembelajaran:",
-    ["Fase 1: Teori Dasar", "Modul 1: Kalkulator TEV", "Modul 2: Analisis Trade-off", "Modul 3: Kebijakan PES", "Modul 4: Kasus Interaktif"]
-)
+    st.markdown("---")
+    st.subheader("ANGGOTA KELOMPOK")
+    
+    col_mhs1, col_mhs2, col_mhs3 = st.columns(3)
+    with col_mhs1:
+        st.info("**Ina Rani Amelia**\n\nNPM: 10090224002")
+    with col_mhs2:
+        st.info("**Nayla Dwi Safitri**\n\nNPM: 10090224013")
+    with col_mhs3:
+        st.info("**Celi Maulidi Aprilia**\n\nNPM: 10090224027")
 
-# Tampilan Alur Belajar Pengguna pada Sidebar
-st.sidebar.markdown("---")
-st.sidebar.subheader("Rencana Alur Belajar")
-st.sidebar.caption("Fase 1: Teori -> Fase 2: Valuasi -> Fase 3: Simulasi -> Fase 4: Evaluasi")
-
-# FASE 1: TEORI DASAR
-if menu == "Fase 1: Teori Dasar":
+    st.markdown("---")
     st.header("Teori Dasar Ekonomi Ekosistem Hutan")
     st.write("Pembelajaran berfokus pada pemahaman jenis jasa lingkungan berdasarkan literatur ekonomi sumber daya alam.")
     
@@ -150,36 +158,4 @@ elif menu == "Modul 3: Kebijakan PES":
     st.header("Modul 3: Kebijakan Payment for Ecosystem Services (PES)")
     st.write("Simulasi instrumen pasar karbon dan pembayaran jasa air bersih untuk menjaga kelestarian ekosistem.")
     
-    st.subheader("Simulasi Kompensasi Finansial Finansial")
-    st.write("Gerakkan slider untuk menentukan besaran nilai insentif karbon yang diberikan kepada masyarakat sekitar hutan guna menghentikan laju degradasi hutan lahan Kalimantan Selatan.")
-    
-    insentif_input = st.slider("Besaran Insentif Karbon Tambahan (Rupiah/Hektar)", 0, 5000000, 1500000)
-    
-    # Menghitung titik keseimbangan sederhana penahanan deforestasi
-    laju_deforestasi_awal = 4.5
-    efek_penurunan = (insentif_input / 5000000) * 4.0
-    laju_deforestasi_akhir = max(0.5, laju_deforestasi_awal - efek_penurunan)
-    
-    st.metric(label="Estimasi Laju Deforestasi Sisa (% Per Tahun)", value=f"{laju_deforestasi_akhir:.2f} %")
-    
-    if laju_deforestasi_akhir < 1.5:
-        st.success("Titik keseimbangan tercapai. Kompensasi finansial berhasil menghentikan mayoritas aktivitas alih fungsi lahan secara liar.")
-    else:
-        st.warning("Nilai kompensasi finansial belum cukup kuat untuk menghentikan aktivitas alih fungsi lahan oleh komunitas lokal.")
-
-# MODUL 4: KASUS INTERAKTIF
-elif menu == "Modul 4: Kasus Interaktif":
-    st.header("Modul 4: Eksplorasi Kasus Riil")
-    st.write("Analisis kasus nyata pengelolaan ekosistem hutan berdasarkan prinsip ekonomi lingkungan.")
-    
-    pilihan_kasus = st.selectbox(
-        "Pilih Studi Kasus Ekosistem:",
-        ["Nilai Serapan Karbon Hutan Produksi", "Peran Ekologis Lebah dalam Penyerbukan", "Fungsi Proteksi Hidrologis Hutan Lindung Kalsel"]
-    )
-    
-    if pilihan_kasus == "Nilai Serapan Karbon Hutan Produksi":
-        st.write("Hutan Produksi Tetap Kalimantan Selatan seluas 394.563,75 hektar memiliki peran ganda. Selain memproduksi kayu bulat sebesar 477.250,17 meter kubik, kawasan ini berperan sebagai carbon sink yang menahan pelepasan emisi ke atmosfer.")
-    elif pilihan_kasus == "Peran Ekologis Lebah dalam Penyerbukan":
-        st.write("Lebah hutan menyediakan jasa pengatur (regulating services) yang menjaga keberlangsungan reproduksi tanaman hutan. Nilai ekonomi dihitung menggunakan metode biaya pengganti (replacement cost) jika proses penyerbukan harus digantikan teknologi buatan manusia.")
-    elif pilihan_kasus == "Fungsi Proteksi Hidrologis Hutan Lindung Kalsel":
-        st.write("With luas mencapai 308.221,52 hektar, kawasan Hutan Lindung Kalimantan Selatan bertindak sebagai penyimpan air tanah alami. Keberadaan ekosistem ini meminimalkan pengeluaran biaya infrastruktur pengendali banjir di hilir.")
+    st.
