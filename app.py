@@ -158,4 +158,36 @@ elif menu == "Modul 3: Kebijakan PES":
     st.header("Modul 3: Kebijakan Payment for Ecosystem Services (PES)")
     st.write("Simulasi instrumen pasar karbon dan pembayaran jasa air bersih untuk menjaga kelestarian ekosistem.")
     
-    st.
+    st.subheader("Simulasi Kompensasi Finansial Finansial")
+    st.write("Gerakkan slider untuk menentukan besaran nilai insentif karbon yang diberikan kepada masyarakat sekitar hutan guna menghentikan laju degradasi hutan lahan Kalimantan Selatan.")
+    
+    insentif_input = st.slider("Besaran Insentif Karbon Tambahan (Rupiah/Hektar)", 0, 5000000, 1500000)
+    
+    # Menghitung titik keseimbangan sederhana penahanan deforestasi
+    laju_deforestasi_awal = 4.5
+    efek_penurunan = (insentif_input / 5000000) * 4.0
+    laju_deforestasi_akhir = max(0.5, laju_deforestasi_awal - efek_penurunan)
+    
+    st.metric(label="Estimasi Laju Deforestasi Sisa (% Per Tahun)", value=f"{laju_deforestasi_akhir:.2f} %")
+    
+    if laju_deforestasi_akhir < 1.5:
+        st.success("Titik keseimbangan tercapai. Kompensasi finansial berhasil menghentikan mayoritas aktivitas alih fungsi lahan secara liar.")
+    else:
+        st.warning("Nilai kompensasi finansial belum cukup kuat untuk menghentikan aktivitas alih fungsi lahan oleh komunitas lokal.")
+
+# MODUL 4: KASUS INTERAKTIF
+elif menu == "Modul 4: Kasus Interaktif":
+    st.header("Modul 4: Eksplorasi Kasus Riil")
+    st.write("Analisis kasus nyata pengelolaan ekosistem hutan berdasarkan prinsip ekonomi lingkungan.")
+    
+    pilihan_kasus = st.selectbox(
+        "Pilih Studi Kasus Ekosistem:",
+        ["Nilai Serapan Karbon Hutan Produksi", "Peran Ekologis Lebah dalam Penyerbukan", "Fungsi Proteksi Hidrologis Hutan Lindung Kalsel"]
+    )
+    
+    if pilihan_kasus == "Nilai Serapan Karbon Hutan Produksi":
+        st.write("Hutan Produksi Tetap Kalimantan Selatan seluas 394.563,75 hektar memiliki peran ganda. Selain memproduksi kayu bulat sebesar 477.250,17 meter kubik, kawasan ini berperan sebagai carbon sink yang menahan pelepasan emisi ke atmosfer.")
+    elif pilihan_kasus == "Peran Ekologis Lebah dalam Penyerbukan":
+        st.write("Lebah hutan menyediakan jasa pengatur (regulating services) yang menjaga keberlangsungan reproduksi tanaman hutan. Nilai ekonomi dihitung menggunakan metode biaya pengganti (replacement cost) jika proses penyerbukan harus digantikan teknologi buatan manusia.")
+    elif pilihan_kasus == "Fungsi Proteksi Hidrologis Hutan Lindung Kalsel":
+        st.write("Dengan luas mencapai 308.221,52 hektar, kawasan Hutan Lindung Kalimantan Selatan bertindak sebagai penyimpan air tanah alami. Keberadaan ekosistem ini meminimalkan pengeluaran biaya infrastruktur pengendali banjir di hilir.")
