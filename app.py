@@ -56,7 +56,7 @@ if menu == "Halaman Utama & Teori":
     with col_mhs1:
         st.info("**Ina Rani Amelia**\n\nNPM: 10090224002")
     with col_mhs2:
-        st.info("**Nayla Dwi Safitri**\n\nNPM: 10090224013")
+        st.info("**Nayla Dwi Safitri**\n\nNPM: 10090224007")
     with col_mhs3:
         st.info("**Celi Maulidi Aprilia**\n\nNPM: 10090224027")
 
