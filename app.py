@@ -41,7 +41,7 @@ if menu == "Halaman Utama & Teori":
     col_logo, col_judul = st.columns([1, 4])
     with col_logo:
         st.image(
-            "https://www.unisba.ac.id/wp-content/uploads/2022/09/logo-unisba-300x300.png",
+            "logo.png",
             width=140
         )
     with col_judul:
