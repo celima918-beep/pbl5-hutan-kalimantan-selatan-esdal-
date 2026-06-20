@@ -106,11 +106,8 @@ elif menu == "Profile Hutan Kalimantan Selatan":
     col_f4.metric("Produksi Tetap", f"{df_asli.iloc[3]['Nilai']:,.2f} ha")
     col_f5.metric("Produksi Konversi", f"{df_asli.iloc[4]['Nilai']:,.2f} ha")
     
-    st.write("#### Grafik Lingkaran Proporsi Fungsi Kawasan Hutan")
-    
-    import plotly.express as px
-    
-    df_pie_hutan = pd.DataFrame({
+    st.write("#### Grafik Distribusi Luas Kawasan Hutan (Hektar)")
+    df_grafik_hutan = pd.DataFrame({
         "Fungsi Kawasan Hutan": [
             "Hutan Lindung", 
             "Suaka Alam & Pelestarian", 
@@ -126,16 +123,7 @@ elif menu == "Profile Hutan Kalimantan Selatan":
             df_asli.iloc[4]['Nilai']
         ]
     })
-    
-    fig = px.pie(
-        df_pie_hutan, 
-        values="Luas Lahan (ha)", 
-        names="Fungsi Kawasan Hutan",
-        hole=0.3
-    )
-    
-    fig.update_layout(margin=dict(t=20, b=20, l=20, r=20))
-    st.plotly_chart(fig, use_container_width=True)
+    st.bar_chart(data=df_grafik_hutan, x="Fungsi Kawasan Hutan", y="Luas Lahan (ha)")
     
     st.write("---")
     
