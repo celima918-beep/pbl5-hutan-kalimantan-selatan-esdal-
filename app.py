@@ -106,6 +106,25 @@ elif menu == "Profile Hutan Kalimantan Selatan":
     col_f4.metric("Produksi Tetap", f"{df_asli.iloc[3]['Nilai']:,.2f} ha")
     col_f5.metric("Produksi Konversi", f"{df_asli.iloc[4]['Nilai']:,.2f} ha")
     
+    st.write("#### Grafik Distribusi Luas Kawasan Hutan (Hektar)")
+    df_grafik_hutan = pd.DataFrame({
+        "Fungsi Kawasan Hutan": [
+            "Hutan Lindung", 
+            "Suaka Alam & Pelestarian", 
+            "Produksi Terbatas", 
+            "Produksi Tetap", 
+            "Produksi Konversi"
+        ],
+        "Luas Lahan (ha)": [
+            df_asli.iloc[0]['Nilai'],
+            df_asli.iloc[1]['Nilai'],
+            df_asli.iloc[2]['Nilai'],
+            df_asli.iloc[3]['Nilai'],
+            df_asli.iloc[4]['Nilai']
+        ]
+    })
+    st.bar_chart(data=df_grafik_hutan, x="Fungsi Kawasan Hutan", y="Luas Lahan (ha)")
+    
     st.write("---")
     
     st.subheader("2. Kapasitas Produksi Hasil Hutan Kayu")
@@ -214,5 +233,5 @@ elif menu == "Modul 4: Kasus Interaktif":
     else:
         st.write("Analisis nilai ketergantungan komoditas hortikultura terhadap keberadaan fauna hutan.")
         luas_kebun = st.number_input("Luas Lahan Pertanian Sektor Hortikultura (Hektar)", value=5000)
-        nilai_tambah_produksi = luas_kebun * 2000000
-        st.write(f"Nilai ekonomi dari aktivitas penyerbukan alami lebah: Rp {nilai_tambah_produksi:,.2f} / tahun")
+        nilai_tambah_production = luas_kebun * 2000000
+        st.write(f"Nilai ekonomi dari aktivitas penyerbukan alami lebah: Rp {nilai_tambah_production:,.2f} / tahun")
